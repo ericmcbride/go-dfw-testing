@@ -1,0 +1,22 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    restart: always
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d/
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 5432:5432
+  go-dfw-testing:
+    build: .
+    env_file: ./credentials.env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+        - 8080:8080
+    depends_on:
+      - db

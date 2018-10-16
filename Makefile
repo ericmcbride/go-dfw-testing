@@ -17,6 +17,13 @@ test:
 		go test -v ./...
 	docker-compose down
 
+test-func:
+	docker run --rm -it \
+		-v `pwd`:/go/src/$(REPO) \
+		-w /go/src/${REPO} \
+		golang:1.10.0-alpine3.7\
+		go test -v -tags=functional func-test/*.go
+
 run:
 	make build-linux
 	docker-compose up

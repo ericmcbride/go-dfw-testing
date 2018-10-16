@@ -1,4 +1,5 @@
-// + build functional
+// +build functional
+
 package func_test
 
 import "testing"

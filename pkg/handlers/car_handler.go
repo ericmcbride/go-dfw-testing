@@ -38,7 +38,7 @@ func CarsHandler(w http.ResponseWriter, r *http.Request) {
 	case "DELETE":
 		statusCode, err = DeleteCar(w, r)
 	case "GET":
-		GetCar(w, r)
+		statusCode, err = GetCar(w, r)
 	default:
 		http.Error(w, "Invalid Request Method.", 405)
 		return

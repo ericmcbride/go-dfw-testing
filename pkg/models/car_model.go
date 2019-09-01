@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"github.com/ericmcbride/go-dfw-testing/pkg/clients"
 	_ "github.com/lib/pq"
 )
@@ -29,7 +30,7 @@ func SaveCar(db *clients.DBClient, car *CarModel) (string, error) {
 		car.Year,
 	).Scan(&id)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("Could not SAVE car %s", err)
 	}
 	return id, nil
 }
@@ -42,7 +43,7 @@ func DeleteCar(db *clients.DBClient, carId string) error {
 
 	_, err := db.Db.Exec(sqlStatement, carId)
 	if err != nil {
-		return err
+		return fmt.Errorf("Could not DELETE car %s", err)
 	}
 
 	return nil
@@ -67,7 +68,7 @@ func GetCar(db *clients.DBClient, carId string) (CarModel, error) {
 	)
 
 	if err != nil {
-		return CarModel{}, err
+		return CarModel{}, fmt.Errorf("Could not GET car %s", err)
 	}
 
 	return carModel, nil
